@@ -80,3 +80,64 @@ SELECT ROUND(SUM(LAT_N),4) as lat_sum
 FROM STATION 
 WHERE LAT_N > 38.7880
     AND LAT_N < 137.2345;
+
+-- Weather Observation Station 14
+/* 
+Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than 137.2345. 
+Truncate your answer to 4 decimal places.
+*/
+
+SELECT ROUND(MAX(LAT_N), 4)
+FROM STATION 
+WHERE LAT_N < 137.2345;
+
+-- Weather Observation Station 15
+/* 
+Query the Western Longitude (LONG_W) for the largest Northern Latitude (LAT_N) in STATION that is 
+less than 137.2345. Round your answer to 4 decimal places.
+*/
+
+SELECT ROUND(LONG_W, 4)
+FROM STATION
+WHERE LAT_N < 137.2345
+ORDER BY LAT_N DESC
+LIMIT 1;
+
+-- Weather Observation Station 16
+/* 
+Query the smallest Northern Latitude (LAT_N) from STATION that is greater than 38.7780. 
+Round your answer to  decimal places.
+*/
+
+SELECT ROUND(LAT_N, 4)
+FROM STATION
+WHERE LAT_N > 38.7780
+ORDER BY LAT_N
+LIMIT 1;
+
+-- Weather Observation Station 17
+/* 
+Query the Western Longitude (LONG_W) where the smallest Northern Latitude (LAT_N) in STATION 
+is greater than 38.7780. 
+Round your answer to  decimal places.
+*/
+
+SELECT ROUND(LONG_W, 4)
+FROM STATION
+WHERE LAT_N > 38.7780
+ORDER BY LAT_N
+LIMIT 1;
+
+-- Weather Observation Station 18
+/* 
+Consider P_1(a,b) and P_2(a,b) to be two points on a 2D plane.
+ happens to equal the minimum value in Northern Latitude (LAT_N in STATION).
+ happens to equal the minimum value in Western Longitude (LONG_W in STATION).
+ happens to equal the maximum value in Northern Latitude (LAT_N in STATION).
+ happens to equal the maximum value in Western Longitude (LONG_W in STATION).
+Query the Manhattan Distance between points P_1 and P_2 and round it to a scale of 4 decimal places.
+*/
+
+
+SELECT ROUND(ABS(MIN(LAT_N) - MAX(LAT_N)) + ABS(MIN(LONG_W) - MAX(LONG_W)), 4)
+FROM STATION;
