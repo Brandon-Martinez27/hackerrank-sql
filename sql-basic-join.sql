@@ -54,8 +54,33 @@ order those particular students by their marks in ascending order.
 Write a query to help Eve.
 */
 
-SELECT NAME, GRADE, MARKS
-FROM Students
-JOIN Grades
+SELECT IF(GRADE < 8, NULL, NAME), 
+        GRADE, 
+        MARKS
+FROM STUDENTS 
+JOIN GRADES
+WHERE MARKS BETWEEN MIN_MARK AND MAX_MARK
+ORDER BY GRADE DESC, NAME, MARKS
 
-ORDER BY GRADE DESC, NAME
+-- Top Competitors
+/*
+Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! 
+Write a query to print the respective hacker_id and name of hackers who achieved full scores for more 
+than one challenge. Order your output in descending order by the total number of challenges in which 
+the hacker earned a full score. If more than one hacker received full scores in same number of challenges, 
+then sort them by ascending hacker_id.
+*/
+
+SELECT h.hacker_id, h.name
+FROM Submissions s 
+LEFT JOIN Challenges c 
+    ON s.challenge_id = c.challenge_id
+LEFT JOIN Difficulty d
+    ON c.difficulty_level = d.difficulty_level
+JOIN Hackers h
+    ON s.hacker_id = h.hacker_id
+WHERE s.score = d.score
+    AND c.difficulty_level = d.difficulty_level
+GROUP BY h.hacker_id, h.name 
+HAVING COUNT(s.hacker_id) > 1
+ORDER BY COUNT(s.hacker_id) DESC, s.hacker_id
